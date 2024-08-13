@@ -6,8 +6,10 @@ from app.to_do.models import ToDo
 
 class ToDoCreateListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+
+    def get_queryset(self):
+        return ToDo.objects.filter(creator=self.request.user)
 
 
 class ToDoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
