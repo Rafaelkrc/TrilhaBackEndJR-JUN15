@@ -40,60 +40,129 @@ Este projeto tem como objetivo desenvolver uma API RESTful para gerenciamento de
    ├── README.md
    └── package.json
    ```
-## Entregáveis:
-   1. **Código Fonte:**
-      - Código fonte do projeto, organizado conforme a estrutura acima.
-   2. **Repositório GitHub:**
-      - Repositório público contendo o código fonte e documentação.
-   3. **Documentação:**
-      - README.md com instruções sobre como configurar e executar o projeto, além de detalhes dos endpoints da API.
 
-### Detalhes Técnicos: 🔧
-- **Boas Práticas:** Utilizar boas práticas de código limpo, legível e bem documentado.
-- **Git:** Utilizar Git para controle de versão e submeter o projeto através de um repositório público no GitHub.
+# Gerenciador de Tarefas - API com Django Rest Framework
 
-### Dicas para Abordar o Projeto 🌟
-- **Crie um Fork desse Repositório.**
-- **Criar do Zero:** É fundamental que o projeto seja desenvolvido completamente do zero, demonstrando suas habilidades e criatividade desde o início.
-- **Utilize bibliotecas** como Express para criação da API e jsonwebtoken para autenticação.
-- **Documente cada etapa do processo para facilitar a compreensão.**
+Esta é uma API simples para gerenciar tarefas, desenvolvida com Django Rest Framework. A API oferece endpoints para operações CRUD em tarefas. Possui ainda do registro de usuários e autenticação. O banco de dados utilizado é o SQLite.
+Foi utilizado o python-decouple para gerenciar as váriaveis de ambiente, onde estas estão na pasta contrib/env-sample. Foi utilizados as views genericas do DRF o que facilitou na implementação da api e deixando o código limpo e feito o lint com o flake8.
 
-### Critérios de Avaliação: 📝
-- **Funcionalidade:** A aplicação atende aos requisitos funcionais e funciona corretamente?
-- **Qualidade do Código:** O código é limpo, bem estruturado e adequadamente documentado?
-- **Segurança:** A autenticação foi implementada corretamente e as rotas estão protegidas?
-- **Uso do Git:** O controle de versão é usado de forma eficaz com mensagens de commit significativas?
-- **Documentação:** A documentação é clara e detalha o processo de desenvolvimento e uso da API?
+## Como Configurar e Executar
 
-### Não Queremos 🚫
-- Descobrir que o candidato não foi quem realizou o teste.
-- Ver commits grandes sem muita explicação nas mensagens no repositório.
-- Entregas padrão ou cópias de outros projetos. Buscamos originalidade e autenticidade em cada contribuição.
+### Pré-requisitos
 
-### Prazo ⏳
-A data máxima para entrega das trilhas foi removida, permitindo que as pessoas entreguem conforme sua disponibilidade. No entanto, ainda é necessário concluir a trilha com sucesso para ser inserido em uma equipe.
+- Python 3.x
+- Pip (gerenciador de pacotes do Python)
 
-### Instruções de Entrega: 📬
-Após finalizar o projeto, publique-o em uma URL pública (por exemplo, Vercel, Netlify, GitHub Pages, etc.) e hospede o seu servidor na nuvem. Use serviços que ofereçam uso gratiuto por um período, como a AWS e preencha o [Formulário](https://forms.gle/gZViPMTSDV5nidSu6):  
+### Passos
 
----
+1. Clone o repositório para a sua máquina local:
+    ```bash
+    git clone https://github.com/Rafaelkrc/TrilhaBackEndJR-JUN15.git
+    cd TrilhaBackEndJR-JUN15
+    ```
 
-### Desafio da Inovação 🚀
-Achou esse projeto inicial simples? Eleve ainda mais! Estamos em busca de mentes inovadoras que não apenas criem, mas que também desafiem os padrões. Como você pode transformar essa estrutura inicial em algo verdadeiramente extraordinário? Demonstre o poder da sua criatividade e o impacto das suas ideias inovadoras!
+2. Crie um ambiente virtual:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # Para Windows use: venv\Scripts\activate
+    ```
 
----
+3. Instale as dependências necessárias:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-🔗 **Mantenha-se Conectado:**
-- [Discord](https://discord.gg/wzA9FGZHNv)
-- [Website](http://www.codigocertocoders.com.br/)
-- [LinkedIn](https://www.linkedin.com/company/codigocerto/)
-  
-🌐 **Contato:**
-- Email: codigocertocoders@gmail.com
+4. Inclua um arquivo .env com as variáveis de ambiente:
+    - Conforme definidas na pasta contrib/env-sample
 
----
+5. Realize as migrações para criar as tabelas no banco de dados:
+    ```bash
+    python manage.py migrate
+    ```
 
-### Precisa de Ajuda?
-Está com alguma dificuldade, encontrou algum problema no desafio ou tem alguma sugestão pra gente? Crie uma issue e descreva o que achar necessário.
+6. Inicie o servidor de desenvolvimento:
+    ```bash
+    python manage.py runserver
+    ```
 
-**Construindo o amanhã, hoje.**
+## Endpoints Disponíveis
+
+### 1. Registrar Usuário
+
+- **Rota:** `api/v1/register/`
+- **Método:** `POST`
+- **Corpo da Requisição:**
+    ```json
+   {
+      "username": "novousuario",
+      "password": "senhaforte",
+      "email": "usuario@example.com",
+      "first_name": "Nome",
+      "last_name": "Sobrenome"
+   }
+    ```
+
+### 2. Login
+
+- **Rota:** `api/v1/login/`
+- **Método:** `POST`
+- **Corpo da Requisição:**
+    ```json
+   {
+      "username": "novousuario",
+      "password": "senhaforte"
+   }
+    ```
+
+### 3. Criar Tarefa
+
+- **Rota:** `api/v1/todo/`
+- **Método:** `POST`
+- **Autenticação:** Token
+- **Corpo da Requisição:**
+    ```json
+   {
+      "id": 10,
+      "task": "estudar para aprender",
+      "created_at": "2024-08-13T17:50:47.218909-03:00",
+      "do_in": "2024-08-10T12:00:00-03:00",
+      "is_finished": false
+   }
+    ```
+
+### 4. Listar Tarefas
+
+- **Rota:** `/api/v1/todo/`
+- **Método:** `GET`
+- **Autenticação:** Token
+
+### 5. Atualizar Tarefa
+
+- **Rota:** `/api/v1/todo/{id}/`
+- **Método:** `PUT`
+- **Autenticação:** Token
+- **Corpo da Requisição:**
+    ```json
+   {
+      "task": "estudar para aprender",
+      "created_at": "2024-08-06T15:15:16.824782-03:00",
+      "do_in": "2024-08-10T12:00:00-03:00",
+      "is_finished": true
+   }
+    ```
+
+### 6. Deletar Tarefa
+
+- **Rota:** `/api/v1/todo/{id}/`
+- **Método:** `DELETE`
+- **Autenticação:** Token
+
+## Detalhes Técnicos
+
+- **Banco de Dados:** SQLite
+- **Autenticação:** Django Rest Framework com autenticação por jsonwebtoken (JWT), token expira em 1 dia.
+
+## Contribuindo
+
+Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*.
+
