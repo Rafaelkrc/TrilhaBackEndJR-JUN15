@@ -5,14 +5,13 @@ from app.to_do.models import ToDo
 from app.to_do.permissions import IsAuthorOrReadOnly
 
 
-
 class ToDoCreateListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = ToDoSerializer
 
     def get_queryset(self):
         return ToDo.objects.filter(creator=self.request.user)
-    
+
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 

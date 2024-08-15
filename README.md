@@ -45,6 +45,7 @@ Este projeto tem como objetivo desenvolver uma API RESTful para gerenciamento de
 
 Esta é uma API simples para gerenciar tarefas, desenvolvida com Django Rest Framework. A API oferece endpoints para operações CRUD em tarefas. Possui ainda do registro de usuários e autenticação. O banco de dados utilizado é o SQLite.
 Foi utilizado o python-decouple para gerenciar as váriaveis de ambiente, onde estas estão na pasta contrib/env-sample. Foi utilizados as views genericas do DRF o que facilitou na implementação da api e deixando o código limpo e feito o lint com o flake8.
+A API foi publicada na PythonAnywhere em rafaelkrc.pythonanywhere.com/, as rotas estão definidas logo abaixo.
 
 ## Como Configurar e Executar
 
@@ -85,7 +86,7 @@ Foi utilizado o python-decouple para gerenciar as váriaveis de ambiente, onde e
     python manage.py runserver
     ```
 
-## Endpoints Disponíveis
+## Endpoints Disponíveis Local
 
 ### 1. Registrar Usuário
 
@@ -154,6 +155,79 @@ Foi utilizado o python-decouple para gerenciar as váriaveis de ambiente, onde e
 ### 6. Deletar Tarefa
 
 - **Rota:** `/api/v1/todo/{id}/`
+- **Método:** `DELETE`
+- **Autenticação:** Token
+
+
+## Endpoints Disponíveis Online
+
+### 1. Registrar Usuário
+
+- **Rota:** `rafaelkrc.pythonanywhere.com/api/v1/register/`
+- **Método:** `POST`
+- **Corpo da Requisição:**
+    ```json
+   {
+      "username": "novousuario",
+      "password": "senhaforte",
+      "email": "usuario@example.com",
+      "first_name": "Nome",
+      "last_name": "Sobrenome"
+   }
+    ```
+
+### 2. Login
+
+- **Rota:** `rafaelkrc.pythonanywhere.com/api/v1/authentication/login/`
+- **Método:** `POST`
+- **Corpo da Requisição:**
+    ```json
+   {
+      "username": "novousuario",
+      "password": "senhaforte"
+   }
+    ```
+
+### 3. Criar Tarefa
+
+- **Rota:** `rafaelkrc.pythonanywhere.com/api/v1/todo/`
+- **Método:** `POST`
+- **Autenticação:** Token
+- **Corpo da Requisição:**
+    ```json
+   {
+      "id": 10,
+      "task": "estudar para aprender",
+      "created_at": "2024-08-13T17:50:47.218909-03:00",
+      "do_in": "2024-08-10T12:00:00-03:00",
+      "is_finished": false
+   }
+    ```
+
+### 4. Listar Tarefas
+
+- **Rota:** `rafaelkrc.pythonanywhere.com//api/v1/todo/`
+- **Método:** `GET`
+- **Autenticação:** Token
+
+### 5. Atualizar Tarefa
+
+- **Rota:** `rafaelkrc.pythonanywhere.com//api/v1/todo/{id}/`
+- **Método:** `PUT`
+- **Autenticação:** Token
+- **Corpo da Requisição:**
+    ```json
+   {
+      "task": "estudar para aprender",
+      "created_at": "2024-08-06T15:15:16.824782-03:00",
+      "do_in": "2024-08-10T12:00:00-03:00",
+      "is_finished": true
+   }
+    ```
+
+### 6. Deletar Tarefa
+
+- **Rota:** `rafaelkrc.pythonanywhere.com//api/v1/todo/{id}/`
 - **Método:** `DELETE`
 - **Autenticação:** Token
 
