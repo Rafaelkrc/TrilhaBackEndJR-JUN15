@@ -104,7 +104,7 @@ Foi utilizado o python-decouple para gerenciar as váriaveis de ambiente, onde e
 
 ### 2. Login
 
-- **Rota:** `api/v1/login/`
+- **Rota:** `api/v1/authentication/login/`
 - **Método:** `POST`
 - **Corpo da Requisição:**
     ```json
